@@ -1,5 +1,6 @@
 use crate::constants::*;
 mod stack;
+mod resource_loader;
 
 #[allow(dead_code)]
 #[derive(Debug)]
@@ -23,7 +24,7 @@ impl Default for Emu {
 }
 impl Emu {
     pub fn new() -> Self {
-        Self {
+        let mut emu = Self {
             pc: START_ADDR,
             ram: [0; RAM_SIZE],
             screen: [false; SCREEN_WIDTH * SCREEN_HEIGHT],
@@ -34,6 +35,10 @@ impl Emu {
             keys: [false; NUM_KEYS],
             dt: 0,
             st: 0,
-        }
+        };
+
+        emu.load_font();
+
+        return emu;
     }
 }
