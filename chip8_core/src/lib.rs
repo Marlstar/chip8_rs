@@ -1,4 +1,4 @@
-#![allow(clippy::needless_return)]
+#![allow(dead_code, clippy::needless_return)]
 
 mod emu;
 pub use emu::Emu;
