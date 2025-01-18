@@ -1,6 +1,7 @@
 use crate::constants::*;
 mod stack;
 mod resource_loader;
+mod audio;
 
 #[allow(dead_code)]
 #[derive(Debug)]
