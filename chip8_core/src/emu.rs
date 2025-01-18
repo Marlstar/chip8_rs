@@ -1,5 +1,7 @@
 use crate::constants::*;
 mod stack;
+mod timers;
+
 mod resource_loader;
 mod audio;
 
