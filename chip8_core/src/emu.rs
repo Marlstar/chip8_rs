@@ -3,6 +3,7 @@ mod cpu;
 mod stack;
 mod timers;
 
+mod opcode; pub use opcode::Opcode;
 mod resource_loader;
 mod audio;
 

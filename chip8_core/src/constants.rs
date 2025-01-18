@@ -23,4 +23,6 @@ pub const SCREEN_HEIGHT: usize = 32;
 // ============== //
 // == SOFTWARE == //
 // ============== //
+pub const FONT_START_ADDR: u16 = 0x0;
 pub const START_ADDR: u16 = 0x200;
+
