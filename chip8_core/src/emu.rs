@@ -16,6 +16,11 @@ pub struct Emu {
 
     screen: [bool; SCREEN_WIDTH * SCREEN_HEIGHT], // Screen data
 }
+impl Default for Emu {
+    fn default() -> Self {
+        return Self::new();
+    }
+}
 impl Emu {
     pub fn new() -> Self {
         Self {
@@ -30,10 +35,5 @@ impl Emu {
             dt: 0,
             st: 0,
         }
-    }
-}
-impl Default for Emu {
-    fn default() -> Self {
-        return Self::new();
     }
 }
