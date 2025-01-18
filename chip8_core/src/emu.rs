@@ -1,4 +1,5 @@
 use crate::constants::*;
+mod cpu;
 mod stack;
 mod timers;
 
