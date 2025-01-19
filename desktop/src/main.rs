@@ -22,4 +22,19 @@ fn main() {
     let mut canvas = window.into_canvas().present_vsync().build().unwrap();
     canvas.clear();
     canvas.present();
+
+    let mut event_pump = sdl_context.event_pump().unwrap();
+
+    #[allow(clippy::single_match)]
+    'gameloop: loop {
+        for evt in event_pump.poll_iter() {
+            use sdl2::event::Event;
+            match evt {
+                Event::Quit{..} => {
+                    break 'gameloop;
+                },
+                _ => {}
+            }
+        }
+    }
 }
