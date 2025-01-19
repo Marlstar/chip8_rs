@@ -4,7 +4,8 @@ use super::Opcode;
 
 impl super::Emu {
     pub(super) fn tick(&mut self) {
-        let op = self.fetch_opcode();
+        let op = Self::decode_opcode(self.fetch_opcode());
+        self.execute_opcode(op);
     }
 
     fn fetch_opcode(&mut self) -> u16 {
@@ -16,14 +17,6 @@ impl super::Emu {
         return opcode;
     }
 
-    fn split_opcode(opcode: u16) -> (u16,u16,u16,u16) {
-        return (
-            (opcode & 0xF000) >> 12,
-            (opcode & 0x0F00) >> 8,
-            (opcode & 0x00F0) >> 4,
-            (opcode & 0x000F)
-        );
-    }
 
     fn decode_opcode(opcode: u16) -> Opcode {
         return Opcode::new(opcode);

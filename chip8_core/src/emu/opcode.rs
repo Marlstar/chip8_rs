@@ -225,3 +225,66 @@ pub enum Opcode {
     /// Opcode: `FX65`
     LoadFromRam(usize),
 }
+impl Opcode {
+    pub fn new(opcode: u16) -> Self {
+        use Opcode::*;
+        const A: u16 = 0xA;
+        const B: u16 = 0xB;
+        const C: u16 = 0xC;
+        const D: u16 = 0xD;
+        const E: u16 = 0xE;
+        const F: u16 = 0xF;
+        let parts = Opcode::split(opcode);
+        let nn = (opcode & 0x00FF) as u8;
+        let nnn = opcode & 0x0FFF;
+
+        return match parts {
+            (0,0,0,0) => Nop,
+            (0,0,E,0) => ClearScreen,
+            (0,0,E,E) => Return,
+            (1,_,_,_) => Jump(nnn),
+            (2,_,_,_) => Call(nnn),
+            (3,x,_,_) => SkipIfValEQ(x as usize, nn),
+            (4,x,_,_) => SkipIfValNE(x as usize, nn),
+            (5,x,y,0) => SkipIfRegEQ(x as usize, y as usize),
+            (6,x,_,_) => SetToVal(x as usize, nn),
+            (7,x,_,_) => AddVal(x as usize, nn),
+            (8,x,y,0) => SetToReg(x as usize, y as usize),
+            (8,x,y,1) => BitwiseOr(x as usize, y as usize),
+            (8,x,y,2) => BitwiseAnd(x as usize, y as usize),
+            (8,x,y,3) => BitwiseXor(x as usize, y as usize),
+            (8,x,y,4) => AddReg(x as usize, y as usize),
+            (8,x,y,5) => SubReg(x as usize, y as usize),
+            (8,x,_,6) => ShiftRight(x as usize),
+            (8,x,y,7) => SubFromReg(x as usize, y as usize),
+            (8,x,_,E) => ShiftLeft(x as usize),
+            (9,x,y,0) => SkipIfRegNE(x as usize, y as usize),
+            (A,_,_,_) => SetIndex(nnn),
+            (B,_,_,_) => JumpV0Distance(nnn),
+            (C,x,_,_) => Rand(x as usize, nn),
+            (D,x,y,n) => DrawSprite(x, y, n as u8),
+            (E,x,9,E) => SkipIfKeyPressed(x as usize),
+            (E,x,A,1) => SkipIfKeyNotPressed(x as usize),
+            (F,x,0,7) => GetDelayTimer(x as usize),
+            (F,x,0,A) => WaitKey(x as usize),
+            (F,x,1,5) => SetDelayTimer(x as usize),
+            (F,x,1,8) => SetSoundTimer(x as usize),
+            (F,x,1,E) => IncrementI(x as usize),
+            (F,x,2,9) => LoadFontChar(x as usize),
+            (F,x,3,3) => BCD(x as usize),
+            (F,x,5,5) => LoadIntoRam(x as usize),
+            (F,x,6,5) => LoadFromRam(x as usize),
+
+            _ => unimplemented!("Nonexistent opcode {}!", opcode)
+        };
+    }
+
+    fn split(opcode: u16) -> (u16,u16,u16,u16) {
+        return (
+            (opcode & 0xF000) >> 12,
+            (opcode & 0x0F00) >> 8,
+            (opcode & 0x00F0) >> 4,
+            (opcode & 0x000F)
+        );
+    }
+}
