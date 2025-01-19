@@ -9,32 +9,4 @@ fn main() {
         println!("Usage: cargo run path/to/rom");
         return;
     }
-
-    let sdl_context = sdl2::init().unwrap();
-    let video_subsystem = sdl_context.video().unwrap();
-    let window = video_subsystem
-        .window("Chip-8 Emulator", WINDOW_WIDTH, WINDOW_HEIGHT)
-        .position_centered()
-        .opengl()
-        .build()
-        .unwrap();
-
-    let mut canvas = window.into_canvas().present_vsync().build().unwrap();
-    canvas.clear();
-    canvas.present();
-
-    let mut event_pump = sdl_context.event_pump().unwrap();
-
-    #[allow(clippy::single_match)]
-    'gameloop: loop {
-        for evt in event_pump.poll_iter() {
-            use sdl2::event::Event;
-            match evt {
-                Event::Quit{..} => {
-                    break 'gameloop;
-                },
-                _ => {}
-            }
-        }
-    }
 }
