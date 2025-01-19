@@ -1,5 +1,4 @@
 use chip8_core::Emu;
-use desktop::constants::*;
 use std::env;
 use std::io::Read;
 
