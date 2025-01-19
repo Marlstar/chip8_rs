@@ -3,7 +3,7 @@ use crate::emu::SCREEN_WIDTH;
 use super::Opcode;
 
 impl super::Emu {
-    pub(super) fn tick(&mut self) {
+    pub fn tick(&mut self) {
         let op = Self::decode_opcode(self.fetch_opcode());
         self.execute_opcode(op);
     }

@@ -6,6 +6,8 @@ mod timers;
 mod opcode; pub use opcode::Opcode;
 mod resource_loader;
 mod audio;
+mod screen;
+mod keys;
 
 #[allow(dead_code)]
 #[derive(Debug)]
